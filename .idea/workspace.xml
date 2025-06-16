@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="42aa5197-6b19-4581-8287-4765f68d4267" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/dist/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/bundle.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/angular/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/angular/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/angular/angular-csp.css" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/angular/angular-csp.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/angular/angular.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/angular/angular.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/angular/angular.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/angular/angular.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/angular/angular.min.js.gzip" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/angular/angular.min.js.gzip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/angular/angular.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/angular/angular.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/angular/bower.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/angular/bower.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/angular/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/angular/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,9 +12,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2yT5j0WTDB8Tpd879iJ4zawFNGJ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -41,8 +26,8 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/sg-cloud/Documentos/GitHub/ControleDePacientes-Front",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/sg-cloud/Documentos/GitHub/Front/trabalho_erinaldo",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "preferences.lookFeel",
     "ts.external.directory.path": "/home/sg-cloud/Documentos/GitHub/ControleDePacientes-Front/node_modules/typescript/lib",
@@ -64,6 +49,7 @@
       <option name="presentableId" value="Default" />
       <updated>1749845854137</updated>
       <workItem from="1749845855627" duration="191000" />
+      <workItem from="1750096086443" duration="32000" />
     </task>
     <servers />
   </component>
