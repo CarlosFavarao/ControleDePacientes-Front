@@ -1,18 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>register-hospital</title>
-    <link rel="stylesheet" href="register-hospital.css">
-</head>
-<body>
+<div class="body" id="register-hospital">
     <div class="container">
         <div class="page-title">
             <h1>Cadastro de Hospitais</h1>
         </div>
 
         <div id="message-area"></div>
+
+        <h1>{{ vm.mensagem }}</h1>
 
         <div class="control-section">
             <input type="text" id="name-filter" placeholder="Filtrar por nome...">
@@ -27,11 +21,19 @@
                     <th>Nome</th>
                 </tr>
             </thead>
-            <tbody id="tabela-hospitais">
+            <tbody>
+                <tr ng-repeat="hospital in vm.hospitais">
+                    <td>
+                        <button title="Editar">✏️</button>
+                        <button title="Excluir">🗑️</button>
+                    </td>
+                    <td>{{ hospital.id }}</td>
+                    <td>{{ hospital.name }}</td>
+                </tr>
             </tbody>
         </table>
     </div>
-    
+
     <div id="add-hospital-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -50,8 +52,4 @@
             </div>
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-
-    <script src="hospital-controller.js"></script>
-</body>
-</html>
+</div>

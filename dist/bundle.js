@@ -47950,7 +47950,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var HomePageController = /** @class */ (function () {
     function HomePageController() {
-        this.mensagem = 'Bem-vindo à Home Page!';
+        this.mensagem = 'Bem Vindo!';
+        this.name = 'Gerenciador de Leitos';
     }
     return HomePageController;
 }());
@@ -47977,6 +47978,60 @@ __webpack_require__.r(__webpack_exports__);
 
 var homePageModule = angular__WEBPACK_IMPORTED_MODULE_0__.module('homePageModule', []);
 homePageModule.controller('HomePageController', _home_page_controller__WEBPACK_IMPORTED_MODULE_1__.HomePageController);
+
+
+/***/ }),
+
+/***/ "./src/modules/register/index.ts":
+/*!***************************************!*\
+  !*** ./src/modules/register/index.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   registerHospitalModule: () => (/* binding */ registerHospitalModule)
+/* harmony export */ });
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! angular */ "./node_modules/angular/index.js");
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(angular__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _register_hospital_controller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./register-hospital.controller */ "./src/modules/register/register-hospital.controller.ts");
+
+
+var registerHospitalModule = angular__WEBPACK_IMPORTED_MODULE_0__.module('registerHospitalModule', []);
+registerHospitalModule.controller('RegisterHospitalController', _register_hospital_controller__WEBPACK_IMPORTED_MODULE_1__.RegisterHospitalController);
+
+
+/***/ }),
+
+/***/ "./src/modules/register/register-hospital.controller.ts":
+/*!**************************************************************!*\
+  !*** ./src/modules/register/register-hospital.controller.ts ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   RegisterHospitalController: () => (/* binding */ RegisterHospitalController)
+/* harmony export */ });
+var RegisterHospitalController = /** @class */ (function () {
+    function RegisterHospitalController($http) {
+        this.$http = $http;
+        this.hospitais = [];
+        this.mensagem = 'Testando!!!';
+        this.buscarHospitais();
+    }
+    RegisterHospitalController.prototype.buscarHospitais = function () {
+        var _this = this;
+        this.$http.get('http://localhost:8080/hospitals')
+            .then(function (response) { _this.hospitais = response.data; })
+            .catch(function (error) { console.error('Erro ao Buscar Hospitais', error); });
+    };
+    RegisterHospitalController.$inject = ['$http'];
+    return RegisterHospitalController;
+}());
+
 
 
 /***/ })
@@ -48073,12 +48128,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(angular__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var angular_ui_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! angular-ui-router */ "./node_modules/angular-ui-router/lib-esm/index.js");
 /* harmony import */ var _home_page_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./home-page/index */ "./src/home-page/index.ts");
+/* harmony import */ var _modules_register_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/register/index */ "./src/modules/register/index.ts");
+
 
 
 
 var app = angular__WEBPACK_IMPORTED_MODULE_0__.module('meuApp', [
     'ui.router',
-    _home_page_index__WEBPACK_IMPORTED_MODULE_2__.homePageModule.name
+    _home_page_index__WEBPACK_IMPORTED_MODULE_2__.homePageModule.name,
+    _modules_register_index__WEBPACK_IMPORTED_MODULE_3__.registerHospitalModule.name
 ]);
 app.config([
     '$stateProvider',
@@ -48088,6 +48146,12 @@ app.config([
             url: '/home',
             templateUrl: 'src/home-page/home-page.html',
             controller: 'HomePageController',
+            controllerAs: 'vm'
+        });
+        $stateProvider.state('registerHospital', {
+            url: '/register-hospital',
+            templateUrl: 'src/modules/register/register-hospital.html',
+            controller: 'RegisterHospitalController',
             controllerAs: 'vm'
         });
         $urlRouterProvider.otherwise('/home');

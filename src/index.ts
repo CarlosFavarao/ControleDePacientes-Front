@@ -2,10 +2,12 @@ import * as angular from 'angular';
 import 'angular-ui-router';
 
 import { homePageModule } from './home-page/index';
+import { registerHospitalModule } from './modules/register/index';
 
 const app = angular.module('meuApp', [
   'ui.router',
-  homePageModule.name
+  homePageModule.name,
+  registerHospitalModule.name
 ]);
 
 app.config([
@@ -18,6 +20,13 @@ app.config([
       controller: 'HomePageController',
       controllerAs: 'vm'
     });
+
+    $stateProvider.state('registerHospital', {
+      url: '/register-hospital',
+      templateUrl: 'src/modules/register/register-hospital.html',
+      controller: 'RegisterHospitalController',
+      controllerAs: 'vm'
+    }); 
 
     $urlRouterProvider.otherwise('/home');
   }
