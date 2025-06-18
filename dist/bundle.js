@@ -48018,15 +48018,57 @@ __webpack_require__.r(__webpack_exports__);
 var RegisterHospitalController = /** @class */ (function () {
     function RegisterHospitalController($http) {
         this.$http = $http;
-        this.hospitais = [];
-        this.mensagem = 'Testando!!!';
-        this.buscarHospitais();
+        this.hospitals = [];
+        this.searchName = '';
+        this.hospitalName = '';
+        this.listHospitals();
     }
-    RegisterHospitalController.prototype.buscarHospitais = function () {
+    RegisterHospitalController.prototype.listHospitals = function () {
         var _this = this;
         this.$http.get('http://localhost:8080/hospitals')
-            .then(function (response) { _this.hospitais = response.data; })
+            .then(function (response) { _this.hospitals = response.data; })
             .catch(function (error) { console.error('Erro ao Buscar Hospitais', error); });
+    };
+    RegisterHospitalController.prototype.findHospitalsByName = function () {
+        var _this = this;
+        if (!this.searchName || this.searchName.trim() === '') {
+            this.listHospitals();
+            return;
+        }
+        this.$http.get("http://localhost:8080/hospitals/search/".concat(this.searchName))
+            .then(function (response) { _this.hospitals = response.data; })
+            .catch(function (error) { console.error('Erro ao Buscar Hospitais', error); });
+    };
+    RegisterHospitalController.prototype.addHospital = function () {
+        var _this = this;
+        console.log('Função adicionarHospital foi chamada');
+        if (!this.hospitalName.trim())
+            return;
+        var hospital = { name: this.hospitalName };
+        this.$http.post('http://localhost:8080/hospitals', hospital)
+            .then(function () {
+            _this.hospitalName = '';
+            _this.listHospitals();
+        }).catch(function (error) { console.error('Erro ao Adicionar Hospital', error); });
+    };
+    RegisterHospitalController.prototype.updateHospital = function (hospital) {
+        var _this = this;
+        var newName = prompt('Digite o novo nome do hospital');
+        if (newName === null || newName.trim() === '')
+            return;
+        var hospitalUpdate = { name: newName };
+        this.$http.put("http://localhost:8080/hospitals/".concat(hospital.id), hospitalUpdate)
+            .then(function () { _this.listHospitals(); })
+            .catch(function (error) { console.error('Erro ao Atualizar Hospital', error); });
+    };
+    RegisterHospitalController.prototype.deleteHospital = function (hospitalId) {
+        var _this = this;
+        var confirmar = confirm('Tem certeza que deseja excluir este hospital?');
+        if (!confirmar)
+            return;
+        this.$http.delete("http://localhost:8080/hospitals/".concat(hospitalId))
+            .then(function () { _this.listHospitals(); })
+            .catch(function (error) { console.error('Erro ao Deletar Hospital', error); });
     };
     RegisterHospitalController.$inject = ['$http'];
     return RegisterHospitalController;
