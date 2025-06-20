@@ -4,8 +4,8 @@ export class RegisterHospitalController {
 
     listHospitals(){
         this.$http.get('http://localhost:8080/hospitals')
-        .then(response => {this.hospitals = response.data as any;})
-        .catch (error => {console.error('Erro ao Buscar Hospitais', error);})
+            .then(response => {this.hospitals = response.data as any;})
+            .catch (error => {console.error('Erro ao Buscar Hospitais', error);})
     }
 
     constructor(private $http : angular.IHttpService){
@@ -28,7 +28,6 @@ export class RegisterHospitalController {
     hospitalName: string = '';
 
     addHospital(){
-        console.log('Função adicionarHospital foi chamada');
         if(!this.hospitalName.trim()) return;
 
         const hospital = {name: this.hospitalName};
