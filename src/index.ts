@@ -4,6 +4,7 @@ import 'angular-ui-router';
 import { homePageModule } from './home-page/index';
 import { registerHospitalModule } from './modules/register-hospital/index';
 import { registerPatientModule } from "./modules/register-patient/index";
+import { AdmissionController } from './modules/admission/admission.controller';
 
 const app = angular.module('meuApp', [
   'ui.router',
@@ -36,6 +37,13 @@ app.config([
       controller: 'RegisterPatientController',
       controllerAs: 'vm'
     });
+
+    $stateProvider.state('admission', {
+      url: '/admission',
+      templateUrl: 'src/modules/admission/admission.html',
+      controller: 'AdmissionController',
+      controllerAs: 'vm'
+    })
 
     $urlRouterProvider.otherwise('/home');
   }

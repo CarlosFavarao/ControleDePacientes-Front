@@ -1,0 +1,32 @@
+<div id="admission">
+  <div id="admission-container">
+    <div id="admission-title">
+      <h1>Internações</h1>
+    </div>
+    <div id="admit">
+      <h2>Internar Paciente</h2>
+      <label for="name-admit">Nome:</label>
+      <input id="name-admit" type="text" />
+      <label for="specialty-admit">Selecione a especialidade:</label>
+      <select id="specialty-admit">
+        <option value="" disabled selected hidden>Escolha...</option>
+      </select>
+      <label for="hospital-admit">Selecione o hospital:</label>
+      <select id="hospital-admit">
+        <option value="" disabled selected hidden>Escolha...</option>
+      </select>
+      <label for="bed-admit">Selecione a cama:</label>
+      <table id="bed-admit"></table>
+      <button id="button-admit">Internar</button>
+    </div>
+
+    <div id="currently-admitted">
+      <h2>Pacientes Internados</h2>
+      <label for="hospital-filter">Hospital:</label>
+      <select id="hospital-filter"></select>
+      <label for="specialty-filter">Especialidade:</label>
+      <select id="specialty-filter"></select>
+      <table id="table-admitted"></table>
+    </div>
+  </div>
+</div>

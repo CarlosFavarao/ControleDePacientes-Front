@@ -48299,6 +48299,12 @@ app.config([
             controller: 'RegisterPatientController',
             controllerAs: 'vm'
         });
+        $stateProvider.state('admission', {
+            url: '/admission',
+            templateUrl: 'src/modules/admission/admission.html',
+            controller: 'AdmissionController',
+            controllerAs: 'vm'
+        });
         $urlRouterProvider.otherwise('/home');
     }
 ]);
