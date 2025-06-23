@@ -47982,6 +47982,143 @@ homePageModule.controller('HomePageController', _home_page_controller__WEBPACK_I
 
 /***/ }),
 
+/***/ "./src/modules/admission/admission.controller.ts":
+/*!*******************************************************!*\
+  !*** ./src/modules/admission/admission.controller.ts ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AdmissionController: () => (/* binding */ AdmissionController)
+/* harmony export */ });
+var AdmissionController = /** @class */ (function () {
+    function AdmissionController($http) {
+        this.$http = $http;
+        this.admittedPatients = [];
+        this.patientResults = [];
+        this.hospitals = [];
+        this.patientName = '';
+        this.selectedPatientId = null;
+        this.selectedHospitalId = null;
+        this.selectedSpecialty = '';
+        this.availableBeds = [];
+        this.selectedBedId = null;
+        this.bedPageNumber = 0;
+        this.bedPageSize = 5;
+        this.bedTotalPages = 0;
+        this.getAdmittedPatients();
+        this.loadHospitals();
+    }
+    AdmissionController.prototype.getAdmittedPatients = function () {
+        var _this = this;
+        this.$http.get('http://localhost:8080/adm/currently-admitted')
+            .then(function (response) { _this.admittedPatients = response.data; })
+            .catch(function (error) { console.error('Erro ao Buscar Pacientes Admitidos', error); });
+    };
+    AdmissionController.prototype.loadHospitals = function () {
+        var _this = this;
+        this.$http.get('http://localhost:8080/hospitals')
+            .then(function (response) { _this.hospitals = response.data; })
+            .catch(function (error) { console.error('Erro ao Buscar Hospitais', error); });
+    };
+    AdmissionController.prototype.selectPatient = function (patient) {
+        this.patientName = patient.name;
+        this.selectedPatientId = patient.id;
+        this.patientResults = [];
+    };
+    AdmissionController.prototype.searchPatients = function (name) {
+        var _this = this;
+        this.$http.get("http://localhost:8080/patients/search/".concat(name))
+            .then(function (response) { _this.patientResults = response.data; })
+            .catch(function (error) { console.error('Erro ao Buscar Pacientes', error); });
+    };
+    AdmissionController.prototype.loadAvailableBeds = function () {
+        var _this = this;
+        var baseUrl = 'http://localhost:8080';
+        var url = '';
+        // if (this.selectedHospitalId && this.selectedSpecialty) {
+        //     url = `${baseUrl}/beds/available-by-hospital-and-specialty/${this.selectedHospitalId}/${this.selectedSpecialty}`;
+        // } else if (this.selectedHospitalId) {
+        //     url = `${baseUrl}/beds/available-by-hospital/${this.selectedHospitalId}`;
+        // } else {
+        //     url = `${baseUrl}/beds/available`;
+        // }
+        if (this.selectedHospitalId && this.selectedSpecialty) {
+            url = "".concat(baseUrl, "/beds/available-by-hospital-and-specialty/").concat(this.selectedHospitalId, "/").concat(this.selectedSpecialty);
+        }
+        else {
+            url = "".concat(baseUrl, "/beds/available");
+        }
+        url += "?page=".concat(this.bedPageNumber, "&size=").concat(this.bedPageSize);
+        this.$http.get(url)
+            .then(function (response) {
+            _this.availableBeds = response.data.content;
+            _this.bedTotalPages = response.data.totalPages;
+        })
+            .catch(function (error) { return console.error('Erro ao buscar leitos disponíveis', error); });
+    };
+    AdmissionController.prototype.admitPatient = function () {
+        var _this = this;
+        if (!this.selectedPatientId || !this.selectedBedId) {
+            alert('Selecione um paciente e uma cama.');
+            return;
+        }
+        var payload = {
+            patientId: this.selectedPatientId,
+            bedId: this.selectedBedId
+        };
+        this.$http.post('http://localhost:8080/adm', payload)
+            .then(function () {
+            alert('Paciente internado com sucesso!');
+            _this.clearForm();
+            _this.getAdmittedPatients();
+        })
+            .catch(function (error) {
+            console.error('Erro ao internar paciente', error);
+            alert('Erro ao internar paciente.');
+        });
+    };
+    AdmissionController.prototype.clearForm = function () {
+        this.patientName = '';
+        this.selectedPatientId = null;
+        this.selectedHospitalId = null;
+        this.selectedSpecialty = '';
+        this.selectedBedId = null;
+        this.availableBeds = [];
+        this.patientResults = [];
+    };
+    AdmissionController.$inject = ['$http'];
+    return AdmissionController;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/modules/admission/index.ts":
+/*!****************************************!*\
+  !*** ./src/modules/admission/index.ts ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   admissionModule: () => (/* binding */ admissionModule)
+/* harmony export */ });
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! angular */ "./node_modules/angular/index.js");
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(angular__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _admission_controller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./admission.controller */ "./src/modules/admission/admission.controller.ts");
+
+
+var admissionModule = angular__WEBPACK_IMPORTED_MODULE_0__.module('admissionModule', []);
+admissionModule.controller('AdmissionController', _admission_controller__WEBPACK_IMPORTED_MODULE_1__.AdmissionController);
+
+
+/***/ }),
+
 /***/ "./src/modules/register-hospital/index.ts":
 /*!************************************************!*\
   !*** ./src/modules/register-hospital/index.ts ***!
@@ -48266,6 +48403,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _home_page_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./home-page/index */ "./src/home-page/index.ts");
 /* harmony import */ var _modules_register_hospital_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/register-hospital/index */ "./src/modules/register-hospital/index.ts");
 /* harmony import */ var _modules_register_patient_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/register-patient/index */ "./src/modules/register-patient/index.ts");
+/* harmony import */ var _modules_admission_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/admission/index */ "./src/modules/admission/index.ts");
+
 
 
 
@@ -48275,7 +48414,8 @@ var app = angular__WEBPACK_IMPORTED_MODULE_0__.module('meuApp', [
     'ui.router',
     _home_page_index__WEBPACK_IMPORTED_MODULE_2__.homePageModule.name,
     _modules_register_hospital_index__WEBPACK_IMPORTED_MODULE_3__.registerHospitalModule.name,
-    _modules_register_patient_index__WEBPACK_IMPORTED_MODULE_4__.registerPatientModule.name
+    _modules_register_patient_index__WEBPACK_IMPORTED_MODULE_4__.registerPatientModule.name,
+    _modules_admission_index__WEBPACK_IMPORTED_MODULE_5__.admissionModule.name
 ]);
 app.config([
     '$stateProvider',

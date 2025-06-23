@@ -4,13 +4,14 @@ import 'angular-ui-router';
 import { homePageModule } from './home-page/index';
 import { registerHospitalModule } from './modules/register-hospital/index';
 import { registerPatientModule } from "./modules/register-patient/index";
-import { AdmissionController } from './modules/admission/admission.controller';
+import { admissionModule } from './modules/admission/index';
 
 const app = angular.module('meuApp', [
   'ui.router',
   homePageModule.name,
   registerHospitalModule.name,
-  registerPatientModule.name
+  registerPatientModule.name,
+  admissionModule.name
 ]);
 
 app.config([
