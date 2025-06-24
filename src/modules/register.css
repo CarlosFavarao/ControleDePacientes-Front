@@ -1,13 +1,17 @@
 
 #register {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: #5f5f74;
+    background-color: #506e63;
     color: #333;
     margin: 0;
     padding: 20px;
     line-height: 1.6;
     align-items: center;
     min-height: 100vh;
+}
+
+.page-title{
+    color: white;
 }
 
 .register-container{

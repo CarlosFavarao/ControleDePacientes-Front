@@ -48143,6 +48143,59 @@ admissionModule.controller('AdmissionController', _admission_controller__WEBPACK
 
 /***/ }),
 
+/***/ "./src/modules/log-patient-history/index.ts":
+/*!**************************************************!*\
+  !*** ./src/modules/log-patient-history/index.ts ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   logPatientHistoryModule: () => (/* binding */ logPatientHistoryModule)
+/* harmony export */ });
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! angular */ "./node_modules/angular/index.js");
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(angular__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _log_patient_history_controller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./log-patient-history.controller */ "./src/modules/log-patient-history/log-patient-history.controller.ts");
+
+
+var logPatientHistoryModule = angular__WEBPACK_IMPORTED_MODULE_0__.module('logPatientHistoryModule', []);
+logPatientHistoryModule.controller('LogPatientHistoryController', _log_patient_history_controller__WEBPACK_IMPORTED_MODULE_1__.LogPatientHistoryController);
+
+
+/***/ }),
+
+/***/ "./src/modules/log-patient-history/log-patient-history.controller.ts":
+/*!***************************************************************************!*\
+  !*** ./src/modules/log-patient-history/log-patient-history.controller.ts ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LogPatientHistoryController: () => (/* binding */ LogPatientHistoryController)
+/* harmony export */ });
+var LogPatientHistoryController = /** @class */ (function () {
+    function LogPatientHistoryController($http) {
+        this.$http = $http;
+        this.patients = [];
+        this.listPatients();
+    }
+    LogPatientHistoryController.prototype.listPatients = function () {
+        var _this = this;
+        this.$http.get('http://localhost:8080/patients')
+            .then(function (response) { _this.patients = response.data; })
+            .catch(function (error) { console.error('Erro ao Buscar Pacientes', error); });
+    };
+    LogPatientHistoryController.$inject = ['$http'];
+    return LogPatientHistoryController;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/modules/register-hospital/index.ts":
 /*!************************************************!*\
   !*** ./src/modules/register-hospital/index.ts ***!
@@ -48428,6 +48481,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_register_hospital_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/register-hospital/index */ "./src/modules/register-hospital/index.ts");
 /* harmony import */ var _modules_register_patient_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/register-patient/index */ "./src/modules/register-patient/index.ts");
 /* harmony import */ var _modules_admission_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/admission/index */ "./src/modules/admission/index.ts");
+/* harmony import */ var _modules_log_patient_history_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/log-patient-history/index */ "./src/modules/log-patient-history/index.ts");
+
 
 
 
@@ -48439,7 +48494,8 @@ var app = angular__WEBPACK_IMPORTED_MODULE_0__.module('meuApp', [
     _home_page_index__WEBPACK_IMPORTED_MODULE_2__.homePageModule.name,
     _modules_register_hospital_index__WEBPACK_IMPORTED_MODULE_3__.registerHospitalModule.name,
     _modules_register_patient_index__WEBPACK_IMPORTED_MODULE_4__.registerPatientModule.name,
-    _modules_admission_index__WEBPACK_IMPORTED_MODULE_5__.admissionModule.name
+    _modules_admission_index__WEBPACK_IMPORTED_MODULE_5__.admissionModule.name,
+    _modules_log_patient_history_index__WEBPACK_IMPORTED_MODULE_6__.logPatientHistoryModule.name
 ]);
 app.config([
     '$stateProvider',
@@ -48467,6 +48523,12 @@ app.config([
             url: '/admission',
             templateUrl: 'src/modules/admission/admission.html',
             controller: 'AdmissionController',
+            controllerAs: 'vm'
+        });
+        $stateProvider.state('logPatientHistory', {
+            url: '/log-patient-history',
+            templateUrl: 'src/modules/log-patient-history/log-patient-history.html',
+            controller: 'LogPatientHistoryController',
             controllerAs: 'vm'
         });
         $urlRouterProvider.otherwise('/home');

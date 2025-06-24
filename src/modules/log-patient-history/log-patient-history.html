@@ -1,0 +1,32 @@
+<div id="log-history">
+  <div id="log-history-title">
+    <h2>Histórico de internação</h2>
+  </div>
+
+  <div id="log-history-container">
+    <label for="log-search">Buscar por nome:</label>
+    <input id="log-search" type="text" />
+  </div>
+
+  <div>
+    <table class="list">
+      <thead>
+      <tr>
+        <th>Ações</th>
+        <th>ID</th>
+        <th>Nome</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="patient in vm.patients">
+        <td>
+
+        </td>
+        <td>{{ patient.id }}</td>
+        <td>{{ patient.name }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

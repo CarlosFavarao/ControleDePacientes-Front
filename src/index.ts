@@ -5,13 +5,15 @@ import { homePageModule } from './home-page/index';
 import { registerHospitalModule } from './modules/register-hospital/index';
 import { registerPatientModule } from "./modules/register-patient/index";
 import { admissionModule } from './modules/admission/index';
+import { logPatientHistoryModule } from './modules/log-patient-history/index';
 
 const app = angular.module('meuApp', [
   'ui.router',
   homePageModule.name,
   registerHospitalModule.name,
   registerPatientModule.name,
-  admissionModule.name
+  admissionModule.name,
+  logPatientHistoryModule.name
 ]);
 
 app.config([
@@ -43,6 +45,13 @@ app.config([
       url: '/admission',
       templateUrl: 'src/modules/admission/admission.html',
       controller: 'AdmissionController',
+      controllerAs: 'vm'
+    });
+
+    $stateProvider.state('logPatientHistory', {
+      url: '/log-patient-history',
+      templateUrl: 'src/modules/log-patient-history/log-patient-history.html',
+      controller: 'LogPatientHistoryController',
       controllerAs: 'vm'
     })
 
