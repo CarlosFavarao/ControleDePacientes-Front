@@ -41,42 +41,6 @@ export class AdmissionController {
         this.patientResults = [];
     }
 
-    searchPatients(name: string){
-        this.$http.get(`http://localhost:8080/patients/search/${name}`)
-            .then(response => {this.patientResults = response.data as any;})
-            .catch (error => {console.error('Erro ao Buscar Pacientes', error);});
-    }
-
-    loadAvailableBeds() {
-        let baseUrl = 'http://localhost:8080';
-
-        let url = '';
-
-        // if (this.selectedHospitalId && this.selectedSpecialty) {
-        //     url = `${baseUrl}/beds/available-by-hospital-and-specialty/${this.selectedHospitalId}/${this.selectedSpecialty}`;
-        // } else if (this.selectedHospitalId) {
-        //     url = `${baseUrl}/beds/available-by-hospital/${this.selectedHospitalId}`;
-        // } else {
-        //     url = `${baseUrl}/beds/available`;
-        // }
-
-        if (this.selectedHospitalId && this.selectedSpecialty) {
-            url = `${baseUrl}/beds/available-by-hospital-and-specialty/${this.selectedHospitalId}/${this.selectedSpecialty}`;
-        } else {
-            url = `${baseUrl}/beds/available`;
-        }
-
-        url += `?page=${this.bedPageNumber}&size=${this.bedPageSize}`;
-
-        this.$http.get<Page<AvailableBedDTO>>(url)
-            .then(response => {
-                this.availableBeds = response.data.content;
-                this.bedTotalPages = response.data.totalPages;
-            })
-            .catch(error => console.error('Erro ao buscar leitos disponíveis', error));
-    }
-
-
     admitPatient() {
         if (!this.selectedPatientId || !this.selectedBedId) {
             alert('Selecione um paciente e uma cama.');
@@ -98,6 +62,67 @@ export class AdmissionController {
                 console.error('Erro ao internar paciente', error);
                 alert('Erro ao internar paciente.');
             });
+    }
+
+    dischargePatient(patientId: number) {
+        this.$http.put(`http://localhost:8080/adm/discharge/${patientId}`, {})
+            .then(() => {
+                alert('Paciente em Alta!');
+                this.getAdmittedPatients();
+            })
+            .catch(error => {console.error('Erro ao dar alta ao Paciente', error);
+                alert('Erro ao dar alta ao Paciente.');
+            }
+            )
+    }
+
+    searchPatients(name: string){
+        this.$http.get(`http://localhost:8080/patients/search/${name}`)
+            .then(response => {this.patientResults = response.data as any;})
+            .catch (error => {console.error('Erro ao Buscar Pacientes', error);});
+    }
+
+    loadAvailableBeds() {
+        this.clearBeds();
+        let baseUrl = 'http://localhost:8080';
+
+        let url = '';
+
+        // if (this.selectedHospitalId && this.selectedSpecialty) {
+        //     url = `${baseUrl}/beds/available-by-hospital-and-specialty/${this.selectedHospitalId}/${this.selectedSpecialty}`;
+        // } else if (this.selectedHospitalId) {
+        //     url = `${baseUrl}/beds/available-by-hospital/${this.selectedHospitalId}`;
+        // } else {
+        //     url = `${baseUrl}/beds/available`;
+        // }
+
+        // if (this.selectedHospitalId && this.selectedSpecialty) {
+        //     url = `${baseUrl}/beds/available-by-hospital-and-specialty/${this.selectedHospitalId}/${this.selectedSpecialty}`;
+        // } else {
+        //     url = `${baseUrl}/beds/available`;
+        // }
+
+        if (!this.selectedHospitalId && !this.selectedSpecialty) {
+            url = `${baseUrl}/beds/available`;
+        }else{
+            url = `${baseUrl}/beds/available-by-hospital-and-specialty/${this.selectedHospitalId}/${this.selectedSpecialty}`;
+        }
+
+        url += `?page=${this.bedPageNumber}&size=${this.bedPageSize}`;
+
+        this.$http.get<Page<AvailableBedDTO>>(url)
+            .then(response => {
+                this.availableBeds = response.data.content;
+                this.bedTotalPages = response.data.totalPages;
+            })
+            .catch(error => console.error('Erro ao buscar leitos disponíveis', error));
+    }
+
+    clearBeds() {
+        this.bedPageNumber = 0;
+        this.bedPageSize = 5;
+        this.bedTotalPages = 0;
+        this.availableBeds = [];
     }
 
     clearForm() {

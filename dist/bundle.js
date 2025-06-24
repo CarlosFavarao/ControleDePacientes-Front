@@ -48028,37 +48028,6 @@ var AdmissionController = /** @class */ (function () {
         this.selectedPatientId = patient.id;
         this.patientResults = [];
     };
-    AdmissionController.prototype.searchPatients = function (name) {
-        var _this = this;
-        this.$http.get("http://localhost:8080/patients/search/".concat(name))
-            .then(function (response) { _this.patientResults = response.data; })
-            .catch(function (error) { console.error('Erro ao Buscar Pacientes', error); });
-    };
-    AdmissionController.prototype.loadAvailableBeds = function () {
-        var _this = this;
-        var baseUrl = 'http://localhost:8080';
-        var url = '';
-        // if (this.selectedHospitalId && this.selectedSpecialty) {
-        //     url = `${baseUrl}/beds/available-by-hospital-and-specialty/${this.selectedHospitalId}/${this.selectedSpecialty}`;
-        // } else if (this.selectedHospitalId) {
-        //     url = `${baseUrl}/beds/available-by-hospital/${this.selectedHospitalId}`;
-        // } else {
-        //     url = `${baseUrl}/beds/available`;
-        // }
-        if (this.selectedHospitalId && this.selectedSpecialty) {
-            url = "".concat(baseUrl, "/beds/available-by-hospital-and-specialty/").concat(this.selectedHospitalId, "/").concat(this.selectedSpecialty);
-        }
-        else {
-            url = "".concat(baseUrl, "/beds/available");
-        }
-        url += "?page=".concat(this.bedPageNumber, "&size=").concat(this.bedPageSize);
-        this.$http.get(url)
-            .then(function (response) {
-            _this.availableBeds = response.data.content;
-            _this.bedTotalPages = response.data.totalPages;
-        })
-            .catch(function (error) { return console.error('Erro ao buscar leitos disponíveis', error); });
-    };
     AdmissionController.prototype.admitPatient = function () {
         var _this = this;
         if (!this.selectedPatientId || !this.selectedBedId) {
@@ -48079,6 +48048,61 @@ var AdmissionController = /** @class */ (function () {
             console.error('Erro ao internar paciente', error);
             alert('Erro ao internar paciente.');
         });
+    };
+    AdmissionController.prototype.dischargePatient = function (patientId) {
+        var _this = this;
+        this.$http.put("http://localhost:8080/adm/discharge/".concat(patientId), {})
+            .then(function () {
+            alert('Paciente em Alta!');
+            _this.getAdmittedPatients();
+        })
+            .catch(function (error) {
+            console.error('Erro ao dar alta ao Paciente', error);
+            alert('Erro ao dar alta ao Paciente.');
+        });
+    };
+    AdmissionController.prototype.searchPatients = function (name) {
+        var _this = this;
+        this.$http.get("http://localhost:8080/patients/search/".concat(name))
+            .then(function (response) { _this.patientResults = response.data; })
+            .catch(function (error) { console.error('Erro ao Buscar Pacientes', error); });
+    };
+    AdmissionController.prototype.loadAvailableBeds = function () {
+        var _this = this;
+        this.clearBeds();
+        var baseUrl = 'http://localhost:8080';
+        var url = '';
+        // if (this.selectedHospitalId && this.selectedSpecialty) {
+        //     url = `${baseUrl}/beds/available-by-hospital-and-specialty/${this.selectedHospitalId}/${this.selectedSpecialty}`;
+        // } else if (this.selectedHospitalId) {
+        //     url = `${baseUrl}/beds/available-by-hospital/${this.selectedHospitalId}`;
+        // } else {
+        //     url = `${baseUrl}/beds/available`;
+        // }
+        // if (this.selectedHospitalId && this.selectedSpecialty) {
+        //     url = `${baseUrl}/beds/available-by-hospital-and-specialty/${this.selectedHospitalId}/${this.selectedSpecialty}`;
+        // } else {
+        //     url = `${baseUrl}/beds/available`;
+        // }
+        if (!this.selectedHospitalId && !this.selectedSpecialty) {
+            url = "".concat(baseUrl, "/beds/available");
+        }
+        else {
+            url = "".concat(baseUrl, "/beds/available-by-hospital-and-specialty/").concat(this.selectedHospitalId, "/").concat(this.selectedSpecialty);
+        }
+        url += "?page=".concat(this.bedPageNumber, "&size=").concat(this.bedPageSize);
+        this.$http.get(url)
+            .then(function (response) {
+            _this.availableBeds = response.data.content;
+            _this.bedTotalPages = response.data.totalPages;
+        })
+            .catch(function (error) { return console.error('Erro ao buscar leitos disponíveis', error); });
+    };
+    AdmissionController.prototype.clearBeds = function () {
+        this.bedPageNumber = 0;
+        this.bedPageSize = 5;
+        this.bedTotalPages = 0;
+        this.availableBeds = [];
     };
     AdmissionController.prototype.clearForm = function () {
         this.patientName = '';
