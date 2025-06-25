@@ -9,8 +9,8 @@ export class AdmissionController {
 
     patientName: string = '';
     selectedPatientId: number | null = null;
-    selectedHospitalId: number | null = null;
-    selectedSpecialty: string = '';
+    selectedHospitalId: number = -1
+    selectedSpecialty: string = 'all';
 
     availableBeds: any[] = [];
     selectedBedId: number | null = null;
@@ -84,23 +84,18 @@ export class AdmissionController {
     }
 
     loadAvailableBeds() {
-        this.clearBeds();
-        let baseUrl = 'http://localhost:8080';
-
+        const baseUrl = 'http://localhost:8080';
         let url = '';
 
-        // if (this.selectedHospitalId && this.selectedSpecialty) {
-        //     url = `${baseUrl}/beds/available-by-hospital-and-specialty/${this.selectedHospitalId}/${this.selectedSpecialty}`;
-        // } else if (this.selectedHospitalId) {
-        //     url = `${baseUrl}/beds/available-by-hospital/${this.selectedHospitalId}`;
-        // } else {
-        //     url = `${baseUrl}/beds/available`;
-        // }
+        const hospitalSelected = this.selectedHospitalId && this.selectedHospitalId != -1;
+        const specialtySelected = this.selectedSpecialty && this.selectedSpecialty !== 'all';
 
-        if (!this.selectedHospitalId && !this.selectedSpecialty) {
-            url = `${baseUrl}/beds/available`;
-        }else{
+        if (hospitalSelected && specialtySelected) {
             url = `${baseUrl}/beds/available-by-hospital-and-specialty/${this.selectedHospitalId}/${this.selectedSpecialty}`;
+        } else if (hospitalSelected) {
+            url = `${baseUrl}/beds/available-by-hospital/${this.selectedHospitalId}`;
+        } else {
+            url = `${baseUrl}/beds/available`;
         }
 
         url += `?page=${this.bedPageNumber}&size=${this.bedPageSize}`;

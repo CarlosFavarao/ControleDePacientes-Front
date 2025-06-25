@@ -48001,8 +48001,8 @@ var AdmissionController = /** @class */ (function () {
         this.hospitals = [];
         this.patientName = '';
         this.selectedPatientId = null;
-        this.selectedHospitalId = null;
-        this.selectedSpecialty = '';
+        this.selectedHospitalId = -1;
+        this.selectedSpecialty = 'all';
         this.availableBeds = [];
         this.selectedBedId = null;
         this.bedPageNumber = 0;
@@ -48069,21 +48069,18 @@ var AdmissionController = /** @class */ (function () {
     };
     AdmissionController.prototype.loadAvailableBeds = function () {
         var _this = this;
-        this.clearBeds();
         var baseUrl = 'http://localhost:8080';
         var url = '';
-        // if (this.selectedHospitalId && this.selectedSpecialty) {
-        //     url = `${baseUrl}/beds/available-by-hospital-and-specialty/${this.selectedHospitalId}/${this.selectedSpecialty}`;
-        // } else if (this.selectedHospitalId) {
-        //     url = `${baseUrl}/beds/available-by-hospital/${this.selectedHospitalId}`;
-        // } else {
-        //     url = `${baseUrl}/beds/available`;
-        // }
-        if (!this.selectedHospitalId && !this.selectedSpecialty) {
-            url = "".concat(baseUrl, "/beds/available");
+        var hospitalSelected = this.selectedHospitalId && this.selectedHospitalId != -1;
+        var specialtySelected = this.selectedSpecialty && this.selectedSpecialty !== 'all';
+        if (hospitalSelected && specialtySelected) {
+            url = "".concat(baseUrl, "/beds/available-by-hospital-and-specialty/").concat(this.selectedHospitalId, "/").concat(this.selectedSpecialty);
+        }
+        else if (hospitalSelected) {
+            url = "".concat(baseUrl, "/beds/available-by-hospital/").concat(this.selectedHospitalId);
         }
         else {
-            url = "".concat(baseUrl, "/beds/available-by-hospital-and-specialty/").concat(this.selectedHospitalId, "/").concat(this.selectedSpecialty);
+            url = "".concat(baseUrl, "/beds/available");
         }
         url += "?page=".concat(this.bedPageNumber, "&size=").concat(this.bedPageSize);
         this.$http.get(url)
@@ -48134,6 +48131,49 @@ __webpack_require__.r(__webpack_exports__);
 
 var admissionModule = angular__WEBPACK_IMPORTED_MODULE_0__.module('admissionModule', []);
 admissionModule.controller('AdmissionController', _admission_controller__WEBPACK_IMPORTED_MODULE_1__.AdmissionController);
+
+
+/***/ }),
+
+/***/ "./src/modules/log-bed-history/index.ts":
+/*!**********************************************!*\
+  !*** ./src/modules/log-bed-history/index.ts ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   logBedHistoryModule: () => (/* binding */ logBedHistoryModule)
+/* harmony export */ });
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! angular */ "./node_modules/angular/index.js");
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(angular__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _log_bed_history_controller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./log-bed-history.controller */ "./src/modules/log-bed-history/log-bed-history.controller.ts");
+
+
+var logBedHistoryModule = angular__WEBPACK_IMPORTED_MODULE_0__.module('logBedHistoryModule', []);
+logBedHistoryModule.controller('LogBedHistoryController', _log_bed_history_controller__WEBPACK_IMPORTED_MODULE_1__.LogBedHistoryController);
+
+
+/***/ }),
+
+/***/ "./src/modules/log-bed-history/log-bed-history.controller.ts":
+/*!*******************************************************************!*\
+  !*** ./src/modules/log-bed-history/log-bed-history.controller.ts ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LogBedHistoryController: () => (/* binding */ LogBedHistoryController)
+/* harmony export */ });
+var LogBedHistoryController = /** @class */ (function () {
+    function LogBedHistoryController() {
+    }
+    return LogBedHistoryController;
+}());
+
 
 
 /***/ }),
@@ -48515,6 +48555,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_register_patient_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/register-patient/index */ "./src/modules/register-patient/index.ts");
 /* harmony import */ var _modules_admission_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/admission/index */ "./src/modules/admission/index.ts");
 /* harmony import */ var _modules_log_patient_history_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/log-patient-history/index */ "./src/modules/log-patient-history/index.ts");
+/* harmony import */ var _modules_log_bed_history_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/log-bed-history/index */ "./src/modules/log-bed-history/index.ts");
+
 
 
 
@@ -48528,7 +48570,8 @@ var app = angular__WEBPACK_IMPORTED_MODULE_0__.module('meuApp', [
     _modules_register_hospital_index__WEBPACK_IMPORTED_MODULE_3__.registerHospitalModule.name,
     _modules_register_patient_index__WEBPACK_IMPORTED_MODULE_4__.registerPatientModule.name,
     _modules_admission_index__WEBPACK_IMPORTED_MODULE_5__.admissionModule.name,
-    _modules_log_patient_history_index__WEBPACK_IMPORTED_MODULE_6__.logPatientHistoryModule.name
+    _modules_log_patient_history_index__WEBPACK_IMPORTED_MODULE_6__.logPatientHistoryModule.name,
+    _modules_log_bed_history_index__WEBPACK_IMPORTED_MODULE_7__.logBedHistoryModule.name
 ]);
 app.config([
     '$stateProvider',
@@ -48562,6 +48605,12 @@ app.config([
             url: '/log-patient-history',
             templateUrl: 'src/modules/log-patient-history/log-patient-history.html',
             controller: 'LogPatientHistoryController',
+            controllerAs: 'vm'
+        });
+        $stateProvider.state('logBedHistory', {
+            url: '/log-bed-history',
+            templateUrl: 'src/modules/log-bed-history/log-bed-history.html',
+            controller: 'LogBedHistoryController',
             controllerAs: 'vm'
         });
         $urlRouterProvider.otherwise('/home');

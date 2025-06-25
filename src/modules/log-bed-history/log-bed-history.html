@@ -1,0 +1,61 @@
+<div id="log-history">
+    <div id="log-history-title">
+        <h2>Histórico de internação de Cama</h2>
+    </div>
+
+    <div id="log-history-container">
+        <label for="log-search">Buscar por código:</label>
+        <input type="text"
+               id="log-search"
+               placeholder="Filtrar por código..."
+               ng-model=""
+               ng-change="" />
+    </div>
+
+    <div id="log-tables">
+        <table id="show-log-list">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Código</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="bed in vm.beds">
+                <td>{{ bed.id }}</td>
+                <td>{{ bed.code }}</td>
+                <td><button ng-click="vm.showBedHistory(bed.id)">Exibir histórico</button></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table id="show-patient-history">
+            <thead>
+            <tr>
+                <th>Paciente</th>
+                <th>Data de internação</th>
+                <th>Data de alta</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="history in vm.bedHistoryLogs">
+                <td>{{ history.patientName }}</td>
+                <td>{{ history.admissionDate }}</td>
+                <td>{{ history.dischargeDate }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <button ng-disabled="vm.historyPageNumber === 0"
+                    ng-click="vm.previousPage()">Anterior</button>
+
+            <span>Página {{ vm.historyPageNumber + 1 }} de {{ vm.historyTotalPages }}</span>
+
+            <button ng-disabled="vm.historyPageNumber >= vm.historyTotalPages - 1"
+                    ng-click="vm.nextPage()">Próximo</button>
+        </div>
+    </div>
+
+</div>

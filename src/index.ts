@@ -6,6 +6,7 @@ import { registerHospitalModule } from './modules/register-hospital/index';
 import { registerPatientModule } from "./modules/register-patient/index";
 import { admissionModule } from './modules/admission/index';
 import { logPatientHistoryModule } from './modules/log-patient-history/index';
+import { logBedHistoryModule } from './modules/log-bed-history/index';
 
 const app = angular.module('meuApp', [
   'ui.router',
@@ -13,7 +14,8 @@ const app = angular.module('meuApp', [
   registerHospitalModule.name,
   registerPatientModule.name,
   admissionModule.name,
-  logPatientHistoryModule.name
+  logPatientHistoryModule.name,
+  logBedHistoryModule.name
 ]);
 
 app.config([
@@ -52,6 +54,13 @@ app.config([
       url: '/log-patient-history',
       templateUrl: 'src/modules/log-patient-history/log-patient-history.html',
       controller: 'LogPatientHistoryController',
+      controllerAs: 'vm'
+    });
+
+    $stateProvider.state('logBedHistory', {
+      url: '/log-bed-history',
+      templateUrl: 'src/modules/log-bed-history/log-bed-history.html',
+      controller: 'LogBedHistoryController',
       controllerAs: 'vm'
     })
 
