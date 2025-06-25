@@ -5,28 +5,63 @@
 
   <div id="log-history-container">
     <label for="log-search">Buscar por nome:</label>
-    <input id="log-search" type="text" />
+    <input type="text"
+           id="log-search"
+           placeholder="Filtrar por nome..."
+           ng-model="vm.searchName"
+           ng-change="vm.findPatientsByName()" />
   </div>
 
-  <div>
-    <table class="list">
+  <div id="log-tables">
+    <table id="show-log-list">
       <thead>
       <tr>
-        <th>Ações</th>
         <th>ID</th>
         <th>Nome</th>
+        <th>Ações</th>
       </tr>
       </thead>
       <tbody>
       <tr ng-repeat="patient in vm.patients">
-        <td>
-
-        </td>
         <td>{{ patient.id }}</td>
         <td>{{ patient.name }}</td>
+        <td><button ng-click="vm.showPatientHistory(patient.id)">Exibir histórico</button></td>
       </tr>
       </tbody>
     </table>
+
+    <table id="show-patient-history">
+      <thead>
+      <tr>
+        <th>Hospital</th>
+        <th>Especialidade</th>
+        <th>Quarto</th>
+        <th>Data de internação</th>
+        <th>Data de alta</th>
+        <th>Internado durante</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="history in vm.patientHistoryLogs">
+        <td>{{ history.hospitalName }}</td>
+        <td>{{ history.specialty }}</td>
+        <td>{{ history.roomCode }}</td>
+        <td>{{ history.admissionDate | date:'dd/MM/yyyy' }}</td>
+        <td>{{ history.dischargeDate | date:'dd/MM/yyyy' }}</td>
+        <td>{{ history.daysAdmitted }} dia(s)</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="pagination">
+      <button ng-disabled="vm.historyPageNumber === 0"
+              ng-click="vm.previousPage()">Anterior</button>
+
+      <span>Página {{ vm.historyPageNumber + 1 }} de {{ vm.historyTotalPages }}</span>
+
+      <button ng-disabled="vm.historyPageNumber >= vm.historyTotalPages - 1"
+              ng-click="vm.nextPage()">Próximo</button>
+    </div>
   </div>
 
 </div>

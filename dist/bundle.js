@@ -48079,11 +48079,6 @@ var AdmissionController = /** @class */ (function () {
         // } else {
         //     url = `${baseUrl}/beds/available`;
         // }
-        // if (this.selectedHospitalId && this.selectedSpecialty) {
-        //     url = `${baseUrl}/beds/available-by-hospital-and-specialty/${this.selectedHospitalId}/${this.selectedSpecialty}`;
-        // } else {
-        //     url = `${baseUrl}/beds/available`;
-        // }
         if (!this.selectedHospitalId && !this.selectedSpecialty) {
             url = "".concat(baseUrl, "/beds/available");
         }
@@ -48180,6 +48175,12 @@ var LogPatientHistoryController = /** @class */ (function () {
     function LogPatientHistoryController($http) {
         this.$http = $http;
         this.patients = [];
+        this.patientHistoryLogs = [];
+        this.patientId = null;
+        this.historyPageNumber = 0;
+        this.historyPageSize = 5;
+        this.historyTotalPages = 0;
+        this.searchName = '';
         this.listPatients();
     }
     LogPatientHistoryController.prototype.listPatients = function () {
@@ -48187,6 +48188,38 @@ var LogPatientHistoryController = /** @class */ (function () {
         this.$http.get('http://localhost:8080/patients')
             .then(function (response) { _this.patients = response.data; })
             .catch(function (error) { console.error('Erro ao Buscar Pacientes', error); });
+    };
+    LogPatientHistoryController.prototype.findPatientsByName = function () {
+        var _this = this;
+        if (!this.searchName || this.searchName.trim() === '') {
+            this.listPatients();
+            return;
+        }
+        this.$http.get("http://localhost:8080/patients/search/".concat(this.searchName))
+            .then(function (response) { _this.patients = response.data; })
+            .catch(function (error) { console.error('Erro ao Buscar Pacientes', error); });
+    };
+    LogPatientHistoryController.prototype.showPatientHistory = function (patientId) {
+        var _this = this;
+        this.patientId = patientId;
+        this.$http.get("http://localhost:8080/adm/history/patient/".concat(patientId, "?page=").concat(this.historyPageNumber, "&size=").concat(this.historyPageSize))
+            .then(function (response) {
+            _this.patientHistoryLogs = response.data.content;
+            _this.historyTotalPages = response.data.totalPages;
+        })
+            .catch(function (error) { console.error('Erro ao Buscar Pacientes', error); });
+    };
+    LogPatientHistoryController.prototype.nextPage = function () {
+        if (this.historyPageNumber < this.historyTotalPages - 1) {
+            this.historyPageNumber++;
+            this.showPatientHistory(this.patientId);
+        }
+    };
+    LogPatientHistoryController.prototype.previousPage = function () {
+        if (this.historyPageNumber > 0) {
+            this.historyPageNumber--;
+            this.showPatientHistory(this.patientId);
+        }
     };
     LogPatientHistoryController.$inject = ['$http'];
     return LogPatientHistoryController;

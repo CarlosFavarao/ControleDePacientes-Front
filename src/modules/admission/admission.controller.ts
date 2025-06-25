@@ -1,4 +1,4 @@
-import { AvailableBedDTO, Page } from './interfaces/bed.types';
+import { AvailableBedDTO, Page } from '../types';
 
 export class AdmissionController {
     static $inject = ['$http'];
@@ -11,6 +11,7 @@ export class AdmissionController {
     selectedPatientId: number | null = null;
     selectedHospitalId: number | null = null;
     selectedSpecialty: string = '';
+
     availableBeds: any[] = [];
     selectedBedId: number | null = null;
 
@@ -92,12 +93,6 @@ export class AdmissionController {
         //     url = `${baseUrl}/beds/available-by-hospital-and-specialty/${this.selectedHospitalId}/${this.selectedSpecialty}`;
         // } else if (this.selectedHospitalId) {
         //     url = `${baseUrl}/beds/available-by-hospital/${this.selectedHospitalId}`;
-        // } else {
-        //     url = `${baseUrl}/beds/available`;
-        // }
-
-        // if (this.selectedHospitalId && this.selectedSpecialty) {
-        //     url = `${baseUrl}/beds/available-by-hospital-and-specialty/${this.selectedHospitalId}/${this.selectedSpecialty}`;
         // } else {
         //     url = `${baseUrl}/beds/available`;
         // }
