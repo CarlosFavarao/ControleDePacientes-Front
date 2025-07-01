@@ -18,14 +18,12 @@
       <label for="hospital-admit">Selecione o hospital:</label>
       <select id="hospital-admit" ng-model="vm.selectedHospitalId" ng-change="vm.bedPageNumber = 0; vm.loadAvailableBeds()">
         <option ng-value="-1" selected disabled hidden>Escolha...</option>
-        <option ng-value="-1">Todos</option>
         <option ng-repeat="h in vm.hospitals" value="{{ h.id }}">{{ h.name }}</option>
       </select>
 
       <label for="specialty-admit">Selecione a especialidade:</label>
       <select id="specialty-admit" ng-model="vm.selectedSpecialty" ng-change="vm.bedPageNumber = 0; vm.loadAvailableBeds()">
-        <option value="all" selected disabled hidden>Escolha...</option>
-        <option value="all">Todos</option>
+        <option value="all" selected>Todos</option>
         <option value="CARDIOLOGY">Cardiologia</option>
         <option value="NEUROLOGY">Neurologia</option>
         <option value="ORTHOPEDICS">Ortopedia</option>
@@ -56,11 +54,13 @@
                 ng-click="vm.bedPageNumber = vm.bedPageNumber + 1; vm.loadAvailableBeds()">Próxima</button>
       </div>
 
-
-      <p ng-if="vm.selectedBedId">Cama selecionada: {{ vm.selectedBedId }}</p>
-      <button id="button-admit" ng-click="vm.admitPatient()">Internar</button>
+      <div id="button-admit-container">
+        <p ng-if="vm.selectedBedId">Cama selecionada: {{ vm.selectedBedId }}</p>
+        <button id="button-admit" ng-click="vm.admitPatient()">Internar</button>
+      </div>
     </div>
 
+    <h2>Pacientes Internados:</h2>
     <table id="currently-admitted">
       <thead>
       <tr>

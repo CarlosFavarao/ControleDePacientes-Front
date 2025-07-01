@@ -23,6 +23,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="bed in vm.beds">
+                <td>{{ bed.hospitalName }}</td>
                 <td>{{ bed.id }}</td>
                 <td>{{ bed.code }}</td>
                 <td><button ng-click="vm.showBedHistory(bed.id)">Exibir histórico</button></td>

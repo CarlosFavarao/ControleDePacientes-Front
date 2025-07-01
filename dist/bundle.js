@@ -48005,6 +48005,7 @@ var AdmissionController = /** @class */ (function () {
         this.selectedSpecialty = 'all';
         this.availableBeds = [];
         this.selectedBedId = null;
+        this.SelectedDoctorId = 1;
         this.bedPageNumber = 0;
         this.bedPageSize = 5;
         this.bedTotalPages = 0;
@@ -48036,7 +48037,8 @@ var AdmissionController = /** @class */ (function () {
         }
         var payload = {
             patientId: this.selectedPatientId,
-            bedId: this.selectedBedId
+            bedId: this.selectedBedId,
+            doctorId: this.SelectedDoctorId
         };
         this.$http.post('http://localhost:8080/adm', payload)
             .then(function () {
@@ -48079,9 +48081,6 @@ var AdmissionController = /** @class */ (function () {
         else if (hospitalSelected) {
             url = "".concat(baseUrl, "/beds/available-by-hospital/").concat(this.selectedHospitalId);
         }
-        else {
-            url = "".concat(baseUrl, "/beds/available");
-        }
         url += "?page=".concat(this.bedPageNumber, "&size=").concat(this.bedPageSize);
         this.$http.get(url)
             .then(function (response) {
@@ -48099,8 +48098,8 @@ var AdmissionController = /** @class */ (function () {
     AdmissionController.prototype.clearForm = function () {
         this.patientName = '';
         this.selectedPatientId = null;
-        this.selectedHospitalId = null;
-        this.selectedSpecialty = '';
+        this.selectedHospitalId = -1;
+        this.selectedSpecialty = 'all';
         this.selectedBedId = null;
         this.availableBeds = [];
         this.patientResults = [];
@@ -48169,8 +48168,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   LogBedHistoryController: () => (/* binding */ LogBedHistoryController)
 /* harmony export */ });
 var LogBedHistoryController = /** @class */ (function () {
-    function LogBedHistoryController() {
+    function LogBedHistoryController($http) {
+        this.$http = $http;
+        this.beds = [];
+        this.listBeds();
     }
+    LogBedHistoryController.prototype.listBeds = function () {
+        var _this = this;
+        this.$http.get('http://localhost:8080/beds')
+            .then(function (response) { _this.beds = response.data; })
+            .catch(function (error) { console.error('Erro ao Buscar Camas', error); });
+    };
+    LogBedHistoryController.$inject = ['$http'];
     return LogBedHistoryController;
 }());
 

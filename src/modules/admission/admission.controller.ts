@@ -15,6 +15,8 @@ export class AdmissionController {
     availableBeds: any[] = [];
     selectedBedId: number | null = null;
 
+    SelectedDoctorId: number = 1;
+
     bedPageNumber: number = 0;
     bedPageSize: number = 5;
     bedTotalPages: number = 0;
@@ -50,7 +52,8 @@ export class AdmissionController {
 
         const payload = {
             patientId: this.selectedPatientId,
-            bedId: this.selectedBedId
+            bedId: this.selectedBedId,
+            doctorId: this.SelectedDoctorId
         };
 
         this.$http.post('http://localhost:8080/adm', payload)
@@ -94,8 +97,6 @@ export class AdmissionController {
             url = `${baseUrl}/beds/available-by-hospital-and-specialty/${this.selectedHospitalId}/${this.selectedSpecialty}`;
         } else if (hospitalSelected) {
             url = `${baseUrl}/beds/available-by-hospital/${this.selectedHospitalId}`;
-        } else {
-            url = `${baseUrl}/beds/available`;
         }
 
         url += `?page=${this.bedPageNumber}&size=${this.bedPageSize}`;
@@ -118,8 +119,8 @@ export class AdmissionController {
     clearForm() {
         this.patientName = '';
         this.selectedPatientId = null;
-        this.selectedHospitalId = null;
-        this.selectedSpecialty = '';
+        this.selectedHospitalId = -1;
+        this.selectedSpecialty = 'all';
         this.selectedBedId = null;
         this.availableBeds = [];
         this.patientResults = [];

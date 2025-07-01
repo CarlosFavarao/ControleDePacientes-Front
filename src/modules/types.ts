@@ -32,3 +32,21 @@ export interface LogDTO{
     daysAdmitted: number;
     hospitalName: string;
 }
+
+export interface BedHistoryDTO{
+    patientName: string;
+    admissionDate: string;
+    dischargeDate: string;
+}
+
+export interface BedResponseDTO{
+    hospitalId: number;
+    hospitalName: string;
+    id: number;
+    code: string;
+    BedStatus: string;
+    roomId: number;
+    roomCode: string;
+    patientId: number;
+    patientName: string;
+}
