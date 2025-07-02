@@ -48171,12 +48171,21 @@ var LogBedHistoryController = /** @class */ (function () {
     function LogBedHistoryController($http) {
         this.$http = $http;
         this.beds = [];
+        this.bedHistoryLogs = [];
         this.listBeds();
     }
     LogBedHistoryController.prototype.listBeds = function () {
         var _this = this;
         this.$http.get('http://localhost:8080/beds')
             .then(function (response) { _this.beds = response.data; })
+            .catch(function (error) { console.error('Erro ao Buscar Camas', error); });
+    };
+    LogBedHistoryController.prototype.showBedHistory = function (bedId) {
+        var _this = this;
+        this.$http.get("http://localhost:8080/adm/history/bed/".concat(bedId, "?page=0&size=20"))
+            .then(function (response) {
+            _this.bedHistoryLogs = response.data.content;
+        })
             .catch(function (error) { console.error('Erro ao Buscar Camas', error); });
     };
     LogBedHistoryController.$inject = ['$http'];
