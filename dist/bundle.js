@@ -48172,6 +48172,10 @@ var LogBedHistoryController = /** @class */ (function () {
         this.$http = $http;
         this.beds = [];
         this.bedHistoryLogs = [];
+        this.bedHistoryId = 0;
+        this.historyPageNumber = 0;
+        this.historyPageSize = 5;
+        this.historyTotalPages = 0;
         this.listBeds();
     }
     LogBedHistoryController.prototype.listBeds = function () {
@@ -48182,11 +48186,25 @@ var LogBedHistoryController = /** @class */ (function () {
     };
     LogBedHistoryController.prototype.showBedHistory = function (bedId) {
         var _this = this;
-        this.$http.get("http://localhost:8080/adm/history/bed/".concat(bedId, "?page=0&size=20"))
+        this.bedHistoryId = bedId;
+        this.$http.get("http://localhost:8080/adm/history/bed/".concat(bedId, "?page=").concat(this.historyPageNumber, "&size=").concat(this.historyPageSize))
             .then(function (response) {
             _this.bedHistoryLogs = response.data.content;
+            _this.historyTotalPages = response.data.totalPages;
         })
             .catch(function (error) { console.error('Erro ao Buscar Camas', error); });
+    };
+    LogBedHistoryController.prototype.nextPage = function () {
+        if (this.historyPageNumber < this.historyTotalPages - 1) {
+            this.historyPageNumber++;
+            this.showBedHistory(this.bedHistoryId);
+        }
+    };
+    LogBedHistoryController.prototype.previousPage = function () {
+        if (this.historyPageNumber > 0) {
+            this.historyPageNumber--;
+            this.showBedHistory(this.bedHistoryId);
+        }
     };
     LogBedHistoryController.$inject = ['$http'];
     return LogBedHistoryController;

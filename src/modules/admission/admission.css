@@ -60,35 +60,7 @@
 }
 
 #bed-admit th {
-    background-color: #f0f0f0;
-}
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    gap: 10px;
-}
-
-button {
-    padding: 10px 16px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007BFF;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-button:hover {
-    background-color: #014a98;
+    background-color: #e8e6e6;
 }
 
 #button-admit {

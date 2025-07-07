@@ -1,4 +1,9 @@
 <div id="log-history">
+
+  <div id="backToHome">
+    <img src="/assets/left-arrow-svgrepo-com.svg" ui-sref="home" id="backHome">
+  </div>
+
   <div id="log-history-title">
     <h2>Histórico de internação</h2>
   </div>
@@ -13,31 +18,32 @@
     </div>
 
     <div id="log-tables">
-      <table id="show-log-list">
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>Ações</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="patient in vm.patients">
-          <td>{{ patient.id }}</td>
-          <td>{{ patient.name }}</td>
-          <td><button ng-click="vm.showPatientHistory(patient.id)">Exibir histórico</button></td>
-        </tr>
-        </tbody>
-      </table>
-
-      <table id="show-patient-history">
+      <div id="log-list">
+        <table id="show-log-list">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Ações</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="patient in vm.patients">
+            <td>{{ patient.id }}</td>
+            <td>{{ patient.name }}</td>
+            <td><button ng-click="vm.showPatientHistory(patient.id)">Exibir histórico</button></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <table id="show-history">
         <thead>
           <tr>
             <th>Hospital</th>
             <th>Especialidade</th>
             <th>Quarto</th>
-            <th>Data de internação</th>
-            <th>Data de alta</th>
+            <th>Internação</th>
+            <th>Alta</th>
             <th>Internado durante</th>
           </tr>
         </thead>
@@ -51,7 +57,8 @@
             <td>{{ history.specialty }}</td>
             <td>{{ history.roomCode }}</td>
             <td>{{ history.admissionDate | date:'dd/MM/yyyy' }}</td>
-            <td>{{ history.dischargeDate | date:'dd/MM/yyyy' }}</td>
+            <td ng-if="history.dischargeDate">{{ history.dischargeDate | date:'dd/MM/yyyy' }}</td>
+            <td ng-if="!history.dischargeDate">Internado</td>
             <td>{{ history.daysAdmitted > 0 ? history.daysAdmitted + ' dia(s)' : 'Apenas Consulta' }}</td>
           </tr>
         </tbody>

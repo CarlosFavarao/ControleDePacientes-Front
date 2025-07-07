@@ -1,0 +1,41 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+button:hover {
+    background-color: #014a98;
+}
+
+#backToHome {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+#backHome {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    filter: grayscale(50%);
+}
