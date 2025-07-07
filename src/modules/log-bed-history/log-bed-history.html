@@ -36,7 +36,7 @@
                 </tbody>
             </table>
 
-            <table id="show-history">
+            <table ng-if="vm.bedHistoryLogs.length" id="show-history">
                 <thead>
                 <tr>
                     <th>Paciente</th>
@@ -45,9 +45,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-if="!vm.bedHistoryLogs.length">
-                    <td>Cama nunca utilizada!</td>
-                </tr>
                 <tr ng-repeat="history in vm.bedHistoryLogs">
                     <td>{{ history.patientName }}</td>
                     <td>{{ history.admissionDate | date: 'dd/MM/yyyy'}}</td>
@@ -55,6 +52,10 @@
                 </tr>
                 </tbody>
             </table>
+
+            <div id="msg-no-history">
+                <p id="status" ng-if="!vm.bedHistoryLogs.length">Cama nunca utilizada!</p>
+            </div>
 
             <div class="pagination">
                 <button ng-disabled="vm.historyPageNumber === 0"

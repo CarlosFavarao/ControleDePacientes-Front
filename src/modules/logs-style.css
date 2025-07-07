@@ -60,3 +60,8 @@
 #show-history th {
     background-color: #e8e6e6;
 }
+
+#msg-no-history{
+    margin: 10px;
+    text-align: center;
+}

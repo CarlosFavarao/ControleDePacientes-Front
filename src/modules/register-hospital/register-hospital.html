@@ -14,13 +14,14 @@
         <div class="add-section">
             <h3>Adicionar Novo Hospital</h3>
             <div class="form-group">
-                <label for="name">Nome do Hospital:</label>
+                <label for="name">Adicionar:</label>
                 <input type="text" id="name" ng-model="vm.hospitalName" placeholder="Digite o nome do hospital" />
                 <button class="btn-add" ng-click="vm.addHospital()">Salvar</button>
             </div>
         </div>
 
         <div class="control-section">
+            <label for="name-filter">Buscar:</label>
             <input type="text"
                    id="name-filter"
                    placeholder="Filtrar por nome..."

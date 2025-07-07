@@ -19,6 +19,7 @@
 
     <div id="log-tables">
       <div id="log-list">
+
         <table id="show-log-list">
           <thead>
           <tr>
@@ -27,6 +28,7 @@
             <th>Ações</th>
           </tr>
           </thead>
+
           <tbody>
           <tr ng-repeat="patient in vm.patients">
             <td>{{ patient.id }}</td>
@@ -36,7 +38,8 @@
           </tbody>
         </table>
       </div>
-      <table id="show-history">
+
+      <table ng-if="vm.patientHistoryLogs.length" id="show-history">
         <thead>
           <tr>
             <th>Hospital</th>
@@ -47,11 +50,8 @@
             <th>Internado durante</th>
           </tr>
         </thead>
-        <tbody>
-          <tr ng-if="!vm.patientHistoryLogs.length">
-            <td>Paciente nunca internado!</td>
-          </tr>
 
+        <tbody>
           <tr ng-repeat="history in vm.patientHistoryLogs">
             <td>{{ history.hospitalName }}</td>
             <td>{{ history.specialty }}</td>
@@ -63,6 +63,10 @@
           </tr>
         </tbody>
       </table>
+
+      <div id="msg-no-history">
+        <p id="status" ng-if="!vm.patientHistoryLogs.length">Paciente nunca internado!</p>
+      </div>
 
       <div class="pagination">
         <button ng-disabled="vm.historyPageNumber === 0"
